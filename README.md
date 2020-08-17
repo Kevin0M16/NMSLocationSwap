@@ -11,11 +11,11 @@ Swap Space Station locations between Saves and delete unwanted locations from th
 ## Download - UPDATE v1.0.1 (AUG 16 2020)
 
 <!--* Download will be available later today. -->
-<pre>  <a href="https://github.com/Kevin0M16/NMSLocationSwap/releases/latest/download/NMSLocationSwap-v1.0.1.zip"><img src="https://img.shields.io/badge/dynamic/json.svg?label=download&url=https://api.github.com/repos/Kevin0M16/NMSCoordinates/releases/latest&query=$.assets[0].name&style=for-the-badge" alt="download"/></a></pre>
+<pre>  <a href="https://github.com/Kevin0M16/NMSLocationSwap/releases/latest/download/NMSLocationSwap-v1.0.1.zip"><img src="https://img.shields.io/badge/dynamic/json.svg?label=download&url=https://api.github.com/repos/Kevin0M16/NMSLocationSwap/releases/latest&query=$.assets[0].name&style=for-the-badge" alt="download"/></a></pre>
 
 ### Requirements
 
-The current version of NMSCoordinates requires No Man's Sky Beyond/Synthesis/Exo Mech/Crossplay/Desolation 2.2-2.62
+The current version of NMSLocationSwap requires No Man's Sky Beyond/Synthesis/Exo Mech/Crossplay/Desolation 2.2-2.62
 
 ## Change Log
 * [Changelog](https://github.com/Kevin0M16/NMSLocationSwap/blob/master/CHANGELOG.md) - For viewing version history.
