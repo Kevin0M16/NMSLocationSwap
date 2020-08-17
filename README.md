@@ -3,7 +3,7 @@
  
 |               NMSLS                       |
 |                :---:                      |
-|       <img src= "Cover_Photo.png"/>       |
+|       <img src= "images/Cover_Photo.png"/>       |
 
 # NMSLocationSwap
 Swap Space Station locations between Saves and delete unwanted locations from the Terminus/Teleport
