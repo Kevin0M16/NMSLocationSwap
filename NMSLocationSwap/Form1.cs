@@ -45,7 +45,7 @@ namespace NMSLocationSwap
             savePath = System.Windows.Forms.Application.CommonAppDataPath + "\\save.nmsls";
 
             //toggle debug 
-            listView1.Visible = false;
+            //listView1.Visible = false;
             button9.Visible = false;
 
             GIndex();
@@ -598,8 +598,8 @@ namespace NMSLocationSwap
                 {
                     string discd = nms.The6F.NlG[i].NKm;
                     ///listBox1.Items.Add(discd);
-                    
-                    if (nms.The6F.NlG[i].IAf == "Spacestation")
+
+                    if (nms.The6F.NlG[i].IAf == "Spacestation" || nms.The6F.NlG[i].IAf == "SpacestationFixPosition")
                     {
                         listBox1.Items.Add(discd);
                     }
@@ -645,8 +645,8 @@ namespace NMSLocationSwap
                 {
                     string discd = nms.The6F.NlG[i].NKm;
                     ///listBox2.Items.Add(discd);
-                    
-                    if (nms.The6F.NlG[i].IAf == "Spacestation")
+
+                    if (nms.The6F.NlG[i].IAf == "Spacestation" || nms.The6F.NlG[i].IAf == "SpacestationFixPosition")
                     {
                         listBox2.Items.Add(discd);
                     }
@@ -1925,7 +1925,7 @@ namespace NMSLocationSwap
         /// <param name="e"></param>
         private void Button9_Click(object sender, EventArgs e)
         {
-            listView1.Items.Clear();
+            ///listView1.Items.Clear();
             textBox7.Clear();
 
             string jsono = File.ReadAllText(hgFilePathA);
@@ -1952,10 +1952,13 @@ namespace NMSLocationSwap
 
             try
             {
-                //Persistent Bases
+                
                 ListViewItem.ListViewSubItem[] subItems;
                 ListViewItem item = null;
                 //var basediscov = JsonConvert.SerializeObject(nms.The6F.F0, Formatting.Indented);
+
+                /*
+                //Persistent Bases
                 for (int i = 0; i < nms.The6F.F0.Length; i++)
                 {
                     string name = nms.The6F.F0[i].NKm;
@@ -1991,9 +1994,10 @@ namespace NMSLocationSwap
                     listView1.Items.Add(item);
                 }              
                 listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                //listBox4.DataSource = lstb;
+                */
 
-                //Discoveries
+                
+                //Planets
                 for (int i = 0; i < nms.FDu.Eto.OsQ.FB.Length; i++)
                 {
                     //var discov = JsonConvert.SerializeObject(nms.FDu.Eto.OsQ.FB[i].The8P3.The5L6, Formatting.Indented);
@@ -2027,12 +2031,93 @@ namespace NMSLocationSwap
                         new ListViewItem.ListViewSubItem(item, nms.FDu.Eto.OsQ.FB[i].The8P3.Dn + " ( " + i + " ) ")};
 
                         item.SubItems.AddRange(subItems);
-                        listView1.Items.Add(item);
+                        ///listView1.Items.Add(item);
                     }
                 }
-                listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                //listBox3.DataSource = lst;
+                ///listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                
 
+                //Minerals
+                for (int i = 0; i < nms.FDu.Eto.OsQ.FB.Length; i++)
+                {
+                    //var discov = JsonConvert.SerializeObject(nms.FDu.Eto.OsQ.FB[i].The8P3.The5L6, Formatting.Indented);
+                    //discov = discov.Replace("\"", "");
+                    //listBox1.Items.Add(discd);
+                    if (nms.FDu.Eto.OsQ.FB[i].The8P3.Dn == "Mineral")
+                    {
+                        //lst.Add(discov);
+
+                        item = new ListViewItem(nms.FDu.Eto.OsQ.FB[i].The8P3.The5L6, 1);
+                        CalculateLongHex(nms.FDu.Eto.OsQ.FB[i].The8P3.The5L6, false);
+                        string[] value = GalacticCoord2.Replace(" ", "").Split(':');
+                        string A = value[0].Trim();
+                        string B = value[1].Trim();
+                        string C = value[2].Trim();
+                        string D = value[3].Trim();
+
+                        //Validate Coordinates
+                        if (ValidateCoord(A, B, C, D))
+                        {
+                            MessageBox.Show("Invalid Coordinates! Out of Range!", "Alert");
+                            //Clear();
+                            AppendLine(textBox7, "Invalid Coordinates!");
+                            continue;
+                        }
+                        GalacticToPortal(Planet, A, B, C, D, false);
+
+                        subItems = new ListViewItem.ListViewSubItem[]
+                        { new ListViewItem.ListViewSubItem(item, PortalCode),
+                        new ListViewItem.ListViewSubItem(item, GalacticCoord2),
+                        new ListViewItem.ListViewSubItem(item, nms.FDu.Eto.OsQ.FB[i].The8P3.Dn + " ( " + i + " ) ")};
+
+                        item.SubItems.AddRange(subItems);
+                        ///listView1.Items.Add(item);
+                    }
+                }
+                ///listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+                //Flora
+                for (int i = 0; i < nms.FDu.Eto.OsQ.FB.Length; i++)
+                {
+                    //var discov = JsonConvert.SerializeObject(nms.FDu.Eto.OsQ.FB[i].The8P3.The5L6, Formatting.Indented);
+                    //discov = discov.Replace("\"", "");
+                    //listBox1.Items.Add(discd);
+                    if (nms.FDu.Eto.OsQ.FB[i].The8P3.Dn == "Flora")
+                    {
+                        //lst.Add(discov);
+
+                        item = new ListViewItem(nms.FDu.Eto.OsQ.FB[i].The8P3.The5L6, 1);
+                        CalculateLongHex(nms.FDu.Eto.OsQ.FB[i].The8P3.The5L6, false);
+                        string[] value = GalacticCoord2.Replace(" ", "").Split(':');
+                        string A = value[0].Trim();
+                        string B = value[1].Trim();
+                        string C = value[2].Trim();
+                        string D = value[3].Trim();
+
+                        //Validate Coordinates
+                        if (ValidateCoord(A, B, C, D))
+                        {
+                            MessageBox.Show("Invalid Coordinates! Out of Range!", "Alert");
+                            //Clear();
+                            AppendLine(textBox7, "Invalid Coordinates!");
+                            continue;
+                        }
+                        GalacticToPortal(Planet, A, B, C, D, false);
+
+                        subItems = new ListViewItem.ListViewSubItem[]
+                        { new ListViewItem.ListViewSubItem(item, PortalCode),
+                        new ListViewItem.ListViewSubItem(item, GalacticCoord2),
+                        new ListViewItem.ListViewSubItem(item, nms.FDu.Eto.OsQ.FB[i].The8P3.Dn + " ( " + i + " ) ")};
+
+                        item.SubItems.AddRange(subItems);
+                        ///listView1.Items.Add(item);
+                    }
+                }
+                ///listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+
+
+                /*
                 //Terminus
                 for (int i = 0; i < nms.The6F.NlG.Length; i++)
                 {
@@ -2078,6 +2163,7 @@ namespace NMSLocationSwap
                 }
                 listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 //listBox3.DataSource = lst;
+                */
             }
             catch
             {
